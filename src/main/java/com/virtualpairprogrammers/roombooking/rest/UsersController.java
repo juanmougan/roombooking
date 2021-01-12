@@ -2,6 +2,7 @@ package com.virtualpairprogrammers.roombooking.rest;
 
 import com.virtualpairprogrammers.roombooking.data.UserRepository;
 import com.virtualpairprogrammers.roombooking.model.entities.User;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/users")
 public class UsersController {
@@ -29,6 +31,7 @@ public class UsersController {
 
     @GetMapping("/{id}")
     public UserDto getUser(@PathVariable final long id) {
+        log.info("GET user: {}", id);
         return userRepository.findById(id)
                 .map(UserDto::fromUser)
                 .orElseThrow(() -> new NotFoundException(User.class.getSimpleName(), id));
